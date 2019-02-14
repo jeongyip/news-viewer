@@ -9,11 +9,17 @@ const NewsListBlock = styled.div`
   width: 768px;
   margin: 0 auto;
   margin-top: 2rem;
+
   @media screen and (max-width: 768px) {
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
   }
+`;
+
+const LoadingText = styled(NewsListBlock)`
+  color: #ced4da;
+  text-align: center;
 `;
 
 class NewsList extends Component {
@@ -27,9 +33,7 @@ class NewsList extends Component {
       this.setState({
         loading: true
       });
-      const response = await axios.get(
-        '/v2/top-headlines?country=kr&apiKey=0a8c4202385d4ec1bb93b7e277b3c51f'
-      );
+      const response = await axios.get('/v2/top-headlines?country=kr&apiKey=0a8c4202385d4ec1bb93b7e277b3c51f');
       this.setState({
         articles: response.data.articles
       });
@@ -48,7 +52,7 @@ class NewsList extends Component {
   render() {
     const { articles, loading } = this.state;
     if (loading || !articles) {
-      return <NewsListBlock>로딩중..</NewsListBlock>;
+      return <LoadingText>뉴스를 불러오는 중 = 3</LoadingText>;
     }
     return (
       <NewsListBlock>
