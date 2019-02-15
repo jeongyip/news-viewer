@@ -33,7 +33,9 @@ class NewsList extends Component {
       this.setState({
         loading: true
       });
-      const response = await axios.get('/v2/top-headlines?country=kr&apiKey=0a8c4202385d4ec1bb93b7e277b3c51f');
+      const { category } = this.props;
+      const query = category === 'all' ? '' : `&category=${category}`;
+      const response = await axios.get(`/v2/top-headlines?country=kr${query}&apiKey=0a8c4202385d4ec1bb93b7e277b3c51f`);
       this.setState({
         articles: response.data.articles
       });
@@ -47,6 +49,13 @@ class NewsList extends Component {
 
   componentDidMount() {
     this.loadData();
+  }
+
+   componentDidUpdate(prevProps, prevState) {
+    // category 값이 바뀔 때 함수 재호출
+    if (prevProps.category !== this.props.category) {
+      this.loadData();
+    }
   }
 
   render() {

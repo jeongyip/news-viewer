@@ -5,12 +5,15 @@ const NewsItemBlock = styled.div`
   display: flex;
 
   .thumbnail {
-    margin-right: 1rem;
+    margin-right: 1.5rem;
+
     img {
       display: block;
-      width: 160px;
+      width: 100px;
       height: 100px;
       object-fit: cover;
+      border-radius: 50px;
+      border: 1px solid #ff8787;
     }
   }
   .contents {
@@ -33,6 +36,7 @@ const NewsItemBlock = styled.div`
 `;
 const NewsItem = ({ article }) => {
   const { title, description, url, urlToImage } = article;
+  console.log(article);
   return (
     <NewsItemBlock>
       {urlToImage && (

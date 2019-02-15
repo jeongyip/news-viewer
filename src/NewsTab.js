@@ -1,39 +1,92 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import NewsList from './NewsList'
 
-const HeaderDiv = styled.div`
-  box-sizing: border-box;
-  padding: 3.5rem;
-  width: 100%
+const categories = [
+  {
+    name: 'all',
+    text: '전체보기'
+  },
+  {
+    name: 'business',
+    text: '비지니스'
+  },
+  {
+    name: 'entertainment',
+    text: '엔터테인먼트'
+  },
+  {
+    name: 'health',
+    text: '건강'
+  },
+  {
+    name: 'science',
+    text: '과학'
+  },
+  {
+    name: 'sports',
+    text: '스포츠'
+  },
+  {
+    name: 'technology',
+    text: '기술'
+  }
+];
+
+const CategoriesBlock = styled.div`
+  display: flex;
+  padding: 1rem;
+  width: 768px;
   margin: 0 auto;
-  text-align: center;
+  justify-content: center;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    overflow-x: auto;
+  }
 `;
 
-const Title = styled.div`
-  display: inline-block;
-  padding: 0.5rem 1.5rem;
-  color: white;
-  font-size: 2rem;
-  font-weight: 500;
-  font-family: "Courier New";
-  background-color: #ff8787;
+const Category = styled.div`
+  font-size: 1.125rem;
+  cursor: pointer;
+  white-space: pre;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    color: #495057;
+  }
+
+${props =>
+    props.active &&
+    `
+      font-weight: 600;
+      border-bottom: 2px solid #22b8cf;
+      color: #22b8cf;
+      &:hover {
+        color: #3bc9db;
+      }
+  `}
+
+  & + & {
+    margin-left: 1.5rem;
+  }
 `;
 
 class NewsTab extends Component {
+
   render() {
+    const { category, onSelect } = this.props;
     return (
-      <div>
-        <ul>
-          <li>business</li>
-          <li>entertainment</li>
-          <li>health</li>
-          <li>science</li>
-          <li>sports</li>
-          <li>technology</li>
-        </ul>
-        <NewsList />
-      </div>
+      <CategoriesBlock>
+        { categories.map(c => (
+          <Category
+            key={c.name}
+            active={category === c.name}
+            onClick={ () => onSelect(c.name)}
+          >
+            {c.text}
+          </Category>
+        ))}
+      </CategoriesBlock>
     );
   }
 }
